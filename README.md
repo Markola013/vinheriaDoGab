@@ -1,93 +1,75 @@
-# code-with-quarkus
+🚀 Quarkus: O que é?
+Quarkus é um framework Java otimizado para GraalVM e Open J9 que oferece inicialização rápida e baixo consumo de memória, tornando-o ideal para microsserviços, Kubernetes e arquiteturas Serverless. Se deseja mais detalhes, acesse: https://quarkus.io/
 
-Este projeto utiliza o **Quarkus**, o *Supersonic Subatomic Java Framework*.
+💻 Executando em Modo de Desenvolvimento
+Para desenvolver com live coding (recarga instantânea de código), utilize o comando:
 
-Se você deseja saber mais sobre o Quarkus, acesse o site oficial:  
-[https://quarkus.io/](https://quarkus.io/)
+./mvnw quarkus:dev
 
----
+Dev UI
+O Quarkus inclui uma Dev UI para monitoramento e configuração, acessível apenas neste modo:
 
-## Executando a aplicação em modo de desenvolvimento
+http://localhost:8080/q/dev/
 
-Você pode executar a aplicação em modo de desenvolvimento, o que permite **live coding**, utilizando o comando:
+📦 Empacotamento e Execução
+Pacote Padrão (Non-Uber Jar)
+O comando padrão de empacotamento cria um jar que não é um über-jar (jar completo). As dependências são separadas.
 
-`./mvnw quarkus:dev`
+Empacotar: ./mvnw package
 
-**Nota**: O Quarkus agora conta com uma **Dev UI**, acessível apenas no modo de desenvolvimento, no endereço:  
-`http://localhost:8080/q/dev/`
+Resultado: O arquivo principal é quarkus-run.jar no diretório target/quarkus-app/.
 
----
+As dependências estão em target/quarkus-app/lib/.
 
-## Empacotando e executando a aplicação
+Executar: java -jar target/quarkus-app/quarkus-run.jar
 
-A aplicação pode ser empacotada com o comando:
+Criando um Über-Jar (Jar Completo)
+Se preferir um único arquivo jar com todas as dependências incluídas:
 
-`./mvnw package`
+Empacotar: ./mvnw package -Dquarkus.package.jar.type=uber-jar
 
-Esse processo irá gerar o arquivo `quarkus-run.jar` dentro do diretório `target/quarkus-app/`.  
-Note que esse **não é um über-jar**, pois as dependências são copiadas separadamente para o diretório `target/quarkus-app/lib/`.
+Executar: java -jar target/*-runner.jar
 
-Você pode executar a aplicação empacotada com:
+🔨 Executáveis Nativos
+Crie um binário nativo para a máxima performance e menor consumo de recursos com o GraalVM:
 
-`java -jar target/quarkus-app/quarkus-run.jar`
+Build Local
+Requisito: GraalVM instalado.
 
-### Criando um Über-Jar
+./mvnw package -Dnative
 
-Se desejar criar um über-jar (jar completo com todas as dependências), execute o comando:
+Build em Container
+Se você não tem o GraalVM, utilize um container (Docker, Podman) para a build:
 
-`./mvnw package -Dquarkus.package.jar.type=uber-jar`
+./mvnw package -Dnative -Dquarkus.native.container-build=true
 
-O über-jar será gerado e poderá ser executado com:
+Execução
+Após a build, o binário pode ser executado diretamente:
 
-`java -jar target/*-runner.jar`
+./target/code-with-quarkus-1.0.0-SNAPSHOT-runner
 
----
+Mais informações sobre a construção de nativos: https://quarkus.io/guides/maven-tooling
 
-## Criando um executável nativo
+📚 Guias (Extensions) Relacionados
+REST (guide): Implementação de Jakarta REST baseada em Vert.x com processamento em tempo de build.
 
-Você pode criar um executável nativo utilizando:
+⚠️ Incompatível com quarkus-resteasy e extensões que dependem dele.
 
-`./mvnw package -Dnative`
+JDBC Driver - H2 (guide): Permite a conexão com o banco de dados H2 via JDBC.
 
-Se você **não tiver o GraalVM instalado**, é possível realizar a build nativa dentro de um container:
+REST Jackson (guide): Adiciona suporte à serialização e desserialização Jackson para os serviços REST.
 
-`./mvnw package -Dnative -Dquarkus.native.container-build=true`
+⚠️ Esta extensão não é compatível com quarkus-resteasy.
 
-Após a build, você poderá executar o binário gerado diretamente:
+Hibernate ORM with Panache (guide): Simplifica o uso do Hibernate ORM com os padrões Active Record ou Repository.
 
-`./target/code-with-quarkus-1.0.0-SNAPSHOT-runner`
+📝 Pontos de Partida no Código
+Hibernate ORM
+Crie sua primeira entidade JPA (POJO anotado).
 
-Para mais informações sobre como construir executáveis nativos, acesse:  
-[https://quarkus.io/guides/maven-tooling](https://quarkus.io/guides/maven-tooling)
+Consulte o guia oficial para saber mais sobre persistência de dados.
 
----
+REST
+Inicie facilmente seus serviços Web REST usando anotações JAX-RS (Jakarta RESTful Web Services).
 
-## Guias Relacionados
-
-- **REST (guide)**: Implementação de Jakarta REST utilizando processamento em tempo de build e Vert.x.  
-  > ⚠️ Esta extensão não é compatível com `quarkus-resteasy` ou extensões que dependem dela.
-
-- **JDBC Driver - H2 (guide)**: Conecte-se ao banco de dados H2 via JDBC.
-
-- **REST Jackson (guide)**: Suporte à serialização com Jackson no Quarkus REST.  
-  > ⚠️ Esta extensão também não é compatível com `quarkus-resteasy`.
-
-- **Hibernate ORM with Panache (guide)**: Simplifica o uso do Hibernate ORM com os padrões *Active Record* ou *Repository*.
-
----
-
-## Código Fornecido
-
-### Hibernate ORM
-
-- Crie sua primeira entidade JPA  
-- Consulte a seção relacionada no guia oficial do Quarkus
-
-### REST
-
-- Inicie facilmente seus serviços Web REST  
-- Consulte a seção relacionada no guia oficial do Quarkus
-
----
-"# api-caoamigo" 
-"# api-caoamigo" 
+Consulte o guia oficial para detalhes sobre como expor seus recursos.

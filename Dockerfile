@@ -2,6 +2,7 @@
 # Use the Eclipse temurin alpine official image
 # https://hub.docker.com/_/eclipse-temurin
 FROM eclipse-temurin:21-jdk-alpine
+RUN apk update && apk add --no-cache curl
 
 # Create and change to the app directory.
 WORKDIR /app
